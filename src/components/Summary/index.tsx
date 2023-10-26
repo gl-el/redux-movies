@@ -13,7 +13,7 @@ export function Summary() {
     if (movie) {
       total.time += Number(movie.Runtime.split(' ')[0]);
       total.userRate += Number(movie.userRate);
-      total.imdbRate += Number(movie.imdbRating);
+      total.imdbRate += Number(movie.imdbRating) ? Number(movie.imdbRating) : 0;
     }
   });
   return (

@@ -50,6 +50,7 @@ export const moviesSlice = createSlice({
       state.page = 1;
       state.movies = [];
       state.status = 'idle';
+      state.total = 0;
     },
   },
   extraReducers: (builder) => {
