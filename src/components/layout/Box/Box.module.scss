@@ -1,0 +1,24 @@
+.box {
+  background-color: var(--color-background-500);
+  border-radius: 10px;
+  width: min(45%, 30vw);
+  position: relative;
+}
+
+.btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-background-900);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.content {
+  height: 100%;
+  overflow: auto;
+}
