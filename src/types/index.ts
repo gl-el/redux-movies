@@ -21,7 +21,10 @@ export interface MovieDetails extends Movie {
   Plot: string;
   Actors: string;
   Director: string;
+  userRate?: string;
 }
+
+export type MovieSaved = Omit<MovieDetails, 'Actors' | 'Director' | 'Genre' | 'Plot' | 'Year' | 'Released'>;
 
 export const Status = ['pending', 'success', 'error', 'idle'] as const;
 export type Status = (typeof Status)[number];

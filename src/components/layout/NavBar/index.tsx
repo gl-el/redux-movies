@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getMovies, resetSearch } from '@/store/movies.slice';
+import { getMovies, resetSearch, setStatus } from '@/store/movies.slice';
 import { Logo } from '@/components/Logo';
 import { Input } from '@/components/Input';
 import { Counter } from '@/components/Counter';
@@ -11,13 +11,14 @@ export function NavBar() {
   const { total } = useAppSelector((state) => state.movies);
   const dispatch = useAppDispatch();
   useEffect(() => {
+    dispatch(setStatus('pending'));
     if (!inputValue) {
       dispatch(resetSearch());
       return;
     }
     const searchMovies = setTimeout(() => {
       dispatch(getMovies(inputValue));
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(searchMovies);
   }, [inputValue, dispatch]);

@@ -1,0 +1,18 @@
+.summary {
+  padding: 20px 30px;
+  background-color: var(--color-background-100);
+  border-radius: 10px;
+}
+
+.header {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-evenly;
+  font-weight: 600;
+}

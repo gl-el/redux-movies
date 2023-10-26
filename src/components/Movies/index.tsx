@@ -8,11 +8,13 @@ export function Movies() {
     <Box>
       {status === 'pending' && <p>Loading...</p>}
       {status === 'error' && <p>{message}</p>}
-      <ul>
-        {movies.map((data) => (
-          <MoviePreview key={data.imdbID} movie={data} />
-        ))}
-      </ul>
+      {status === 'success' && (
+        <ul>
+          {movies.map((data) => (
+            <MoviePreview key={data.imdbID} movie={data} />
+          ))}
+        </ul>
+      )}
     </Box>
   );
 }
