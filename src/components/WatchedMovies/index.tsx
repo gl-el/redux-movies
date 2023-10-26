@@ -3,6 +3,8 @@ import { MovieDetailed } from '../MovieDetailed';
 import { Box } from '../layout/Box';
 import { Summary } from '../Summary';
 import { WatchedMoviePreview } from '../WatchedMoviePreview';
+import { ErrorMessenger } from '../ErrorMessenger';
+import { Loader } from '../Loader';
 
 export function WatchedMovies() {
   const { status, movie, message } = useAppSelector((state) => state.movieDetails);
@@ -14,9 +16,9 @@ export function WatchedMovies() {
       ) : (
         <>
           <Summary />
-          {status === 'error' ? (
-            <p>{message}</p>
-          ) : (
+          {status === 'pending' && <Loader />}
+          {status === 'error' && <ErrorMessenger message={message} />}
+          {status === 'idle' && (
             <ul>
               {savedMovies.map((movie, index) => (
                 <WatchedMoviePreview movie={movie} key={index} />
