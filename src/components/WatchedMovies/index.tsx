@@ -1,32 +1,36 @@
 import { useAppSelector } from '@/store/hooks';
 import { MovieDetailed } from '../MovieDetailed';
-import { Box } from '../layout/Box';
-import { Summary } from '../Summary';
 import { WatchedMoviePreview } from '../WatchedMoviePreview';
-import { ErrorMessenger } from '../ErrorMessenger';
-import { Loader } from '../Loader';
+import { ErrorMessenger } from '../ui/ErrorMessenger';
+import { Loader } from '../ui/Loader';
 
 export function WatchedMovies() {
   const { status, movie, message } = useAppSelector((state) => state.movieDetails);
   const { savedMovies } = useAppSelector((state) => state.moviesSaved);
+
+  if (status === 'pending') {
+    return <Loader />;
+  }
+
+  if (status === 'error') {
+    return <ErrorMessenger message={message} />;
+  }
+
+  if (status === 'idle') {
+    return (
+      <ul>
+        {savedMovies.map((movie) => (
+          // не надо индекс массива использовать как ключ
+          <li key={movie.imdbID}>
+            <WatchedMoviePreview movie={movie} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
-    <Box>
-      {status === 'success' && movie ? (
-        <MovieDetailed movie={movie} />
-      ) : (
-        <>
-          <Summary />
-          {status === 'pending' && <Loader />}
-          {status === 'error' && <ErrorMessenger message={message} />}
-          {status === 'idle' && (
-            <ul>
-              {savedMovies.map((movie, index) => (
-                <WatchedMoviePreview movie={movie} key={index} />
-              ))}
-            </ul>
-          )}
-        </>
-      )}
-    </Box>
+    // компонент знает что ему надо именно в боксе быть, хотя он просто список рендерит
+    movie && <MovieDetailed movie={movie} />
   );
 }

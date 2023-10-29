@@ -26,9 +26,13 @@ export const getMovies = createAsyncThunk<MoviesSearch, string, { rejectValue: s
     const page = state.movies.page;
     try {
       const res = await MoviesService.fetchByQuery(query, page);
+
       if (!res.ok) throw new Error('Failed to get movies');
+
       const data = await res.json();
+
       if (data.Response === 'False') throw new Error(data.Error);
+
       return data;
     } catch (error) {
       if (error instanceof Error) return thunkApi.rejectWithValue(error.message);
@@ -64,18 +68,20 @@ export const moviesSlice = createSlice({
     });
     builder.addCase(getMovies.rejected, (state, action) => {
       state.status = 'error';
+      // initialState
       state.page = 1;
       state.total = 0;
       state.movies = [];
       if (action.payload) {
         state.message = action.payload;
       } else {
-        state.message = 'Error occured';
+        state.message = 'Error occurred';
       }
     });
   },
 });
 
+// setPage не используется
 export const { setPage, setStatus, resetSearch } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

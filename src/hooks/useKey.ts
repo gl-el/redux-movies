@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// useKeyDown, key это про ключи какие-то
 export function useKey(keyCode: string, action: () => void) {
   useEffect(() => {
     const cb = (e: KeyboardEvent) => {

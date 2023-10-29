@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Star } from './Star';
 
+// почему стили не в модуле?
 const containerStyle = {
   display: 'flex',
   alignItems: 'center',
