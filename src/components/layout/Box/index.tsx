@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react';
 import s from './Box.module.scss';
 
+// ToggleBox, Accordion, ченить такое, но это точно не бокс
 export function Box({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
   const toggleOpen = () => {

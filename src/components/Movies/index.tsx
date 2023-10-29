@@ -1,22 +1,29 @@
-import { Box } from '@/components/layout/Box';
 import { useAppSelector } from '@/store/hooks';
 import { MoviePreview } from '../MoviePreview';
-import { Loader } from '../Loader';
-import { ErrorMessenger } from '../ErrorMessenger';
+import { Loader } from '../ui/Loader';
+import { ErrorMessenger } from '../ui/ErrorMessenger';
 
 export function Movies() {
   const { movies, status, message } = useAppSelector((state) => state.movies);
+
+  if (status === 'pending') {
+    return <Loader />;
+  }
+
+  if (status === 'error') {
+    return <ErrorMessenger message={message} />;
+  }
+
   return (
-    <Box>
-      {status === 'pending' && <Loader />}
-      {status === 'error' && <ErrorMessenger message={message} />}
-      {status === 'success' && (
-        <ul>
-          {movies.map((data) => (
-            <MoviePreview key={data.imdbID} movie={data} />
-          ))}
-        </ul>
-      )}
-    </Box>
+    // компонент знает что ему надо именно в боксе быть, хотя он просто список рендерит
+    status === 'success' && (
+      <ul>
+        {movies.map((data) => (
+          <li key={data.imdbID}>
+            <MoviePreview movie={data} />
+          </li>
+        ))}
+      </ul>
+    )
   );
 }

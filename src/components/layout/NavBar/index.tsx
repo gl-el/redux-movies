@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getMovies, resetSearch, setStatus } from '@/store/movies.slice';
-import { Logo } from '@/components/Logo';
-import { Input } from '@/components/Input';
+import { Logo } from '../../ui/Logo';
+import { Input } from '../../ui/Input';
 import { Counter } from '@/components/Counter';
 import s from './NavBar.module.scss';
 import { useKey } from '@/hooks/useKey';
@@ -15,11 +15,14 @@ export function NavBar() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // ты же в экстраредюсерах стейт проставляешь, зачем дубль?
     dispatch(setStatus('pending'));
     if (!inputValue) {
       dispatch(resetSearch());
       return;
     }
+
+    // таймаут для тротлинга? надо в хук вынести useThrottle
     const searchMovies = setTimeout(() => {
       dispatch(getMovies(inputValue));
     }, 300);

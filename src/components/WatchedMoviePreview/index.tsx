@@ -9,7 +9,8 @@ export function WatchedMoviePreview({ movie }: { movie: MovieSaved }) {
     dispatch(deleteMovie(movie.imdbID));
   };
   return (
-    <li className={s.movie}>
+    // у тебя компонент в курсе о том, что он элемент списка. тут нужен див, рендерить его внутри li в Movies
+    <div className={s.movie}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -29,6 +30,6 @@ export function WatchedMoviePreview({ movie }: { movie: MovieSaved }) {
           X
         </button>
       </div>
-    </li>
+    </div>
   );
 }

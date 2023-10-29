@@ -23,8 +23,10 @@ export function MovieDetailed({ movie }: { movie: MovieDetails }) {
   };
 
   useKey('escape', close);
+
   return (
     <section className={s.section}>
+      {/* есть функция close, почему здесь инлайн? */}
       <button className={s.back} onClick={() => dispatch(setStatus('idle'))}>
         ❮
       </button>
