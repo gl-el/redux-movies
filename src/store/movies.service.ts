@@ -1,4 +1,4 @@
-const KEY = '6c6d1102';
+const KEY = import.meta.env.VITE_API_KEY;
 const API_URL = 'https://www.omdbapi.com/';
 
 export const fetchByQuery = async (query: string, page: number) => {
