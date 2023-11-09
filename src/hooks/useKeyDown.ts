@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export function useKey(keyCode: string, action: () => void) {
+export function useKeyDown(keyCode: string, action: () => void) {
   useEffect(() => {
     const cb = (e: KeyboardEvent) => {
       if (e.code.toLowerCase() === keyCode.toLowerCase()) {

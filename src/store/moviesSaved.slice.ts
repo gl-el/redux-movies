@@ -17,10 +17,12 @@ export const moviesSavedSlice = createSlice({
   reducers: {
     saveMovie: (state, action) => {
       const filtered = state.savedMovies.filter((item) => item.imdbID !== action.payload.imdbID);
+      localStorage.setItem('watched', JSON.stringify([...filtered, action.payload]));
       state.savedMovies = [...filtered, action.payload];
     },
     deleteMovie: (state, action) => {
       const filtered = state.savedMovies.filter((item) => item.imdbID !== action.payload);
+      localStorage.setItem('watched', JSON.stringify(filtered));
       state.savedMovies = filtered;
     },
   },

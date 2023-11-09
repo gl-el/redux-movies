@@ -12,12 +12,12 @@ export function MoviePreview({ movie }: { movie: Movie }) {
     dispatch(getMovie(imdbID));
   };
   return (
-    <li className={s.movie} onClick={handleClick}>
+    <div className={s.movie} onClick={handleClick}>
       <img src={poster} alt={`${title} poster`} className={s.poster} />
       <div className={s.info}>
         <h3 className={s.title}>{title}</h3>
         <p>{year}</p>
       </div>
-    </li>
+    </div>
   );
 }

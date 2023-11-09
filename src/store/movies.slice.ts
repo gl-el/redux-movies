@@ -40,9 +40,6 @@ export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setPage: (state, action) => {
-      state.page = action.payload;
-    },
     setStatus: (state, action) => {
       state.status = action.payload;
     },
@@ -76,6 +73,6 @@ export const moviesSlice = createSlice({
   },
 });
 
-export const { setPage, setStatus, resetSearch } = moviesSlice.actions;
+export const { setStatus, resetSearch } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

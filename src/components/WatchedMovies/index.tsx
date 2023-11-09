@@ -1,32 +1,43 @@
 import { useAppSelector } from '@/store/hooks';
 import { MovieDetailed } from '../MovieDetailed';
-import { Box } from '../layout/Box';
 import { Summary } from '../Summary';
 import { WatchedMoviePreview } from '../WatchedMoviePreview';
-import { ErrorMessenger } from '../ErrorMessenger';
-import { Loader } from '../Loader';
+import { ErrorMessage } from '../UI/ErrorMessage';
+import { Loader } from '../UI/Loader';
 
 export function WatchedMovies() {
   const { status, movie, message } = useAppSelector((state) => state.movieDetails);
   const { savedMovies } = useAppSelector((state) => state.moviesSaved);
-  return (
-    <Box>
-      {status === 'success' && movie ? (
-        <MovieDetailed movie={movie} />
-      ) : (
+
+  switch (status) {
+    case 'pending':
+      return (
         <>
           <Summary />
-          {status === 'pending' && <Loader />}
-          {status === 'error' && <ErrorMessenger message={message} />}
-          {status === 'idle' && (
-            <ul>
-              {savedMovies.map((movie, index) => (
-                <WatchedMoviePreview movie={movie} key={index} />
-              ))}
-            </ul>
-          )}
+          <Loader />;
         </>
-      )}
-    </Box>
-  );
+      );
+    case 'error':
+      return (
+        <>
+          <Summary />
+          <ErrorMessage message={message} />;
+        </>
+      );
+    case 'idle':
+      return (
+        <>
+          <Summary />
+          <ul>
+            {savedMovies.map((movie) => (
+              <li key={movie.imdbID}>
+                <WatchedMoviePreview movie={movie} />
+              </li>
+            ))}
+          </ul>
+        </>
+      );
+    case 'success':
+      return movie && <MovieDetailed movie={movie} />;
+  }
 }

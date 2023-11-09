@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getMovies, resetSearch, setStatus } from '@/store/movies.slice';
-import { Logo } from '@/components/Logo';
-import { Input } from '@/components/Input';
-import { Counter } from '@/components/Counter';
+import { Logo } from '@/components/UI/Logo';
+import { Input } from '@/components/UI/Input';
+import { TotalResults } from '@/components/TotalResults';
 import s from './NavBar.module.scss';
-import { useKey } from '@/hooks/useKey';
+import { useKeyDown, useDebounce } from '@/hooks';
 
 export function NavBar() {
   const [inputValue, setInputValue] = useState('');
+  const debouncedInputValue = useDebounce(inputValue, 500);
+  console.log(debouncedInputValue);
   const { total } = useAppSelector((state) => state.movies);
   const dispatch = useAppDispatch();
 
@@ -16,16 +18,15 @@ export function NavBar() {
 
   useEffect(() => {
     dispatch(setStatus('pending'));
-    if (!inputValue) {
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (!debouncedInputValue) {
       dispatch(resetSearch());
       return;
     }
-    const searchMovies = setTimeout(() => {
-      dispatch(getMovies(inputValue));
-    }, 300);
-
-    return () => clearTimeout(searchMovies);
-  }, [inputValue, dispatch]);
+    dispatch(getMovies(debouncedInputValue));
+  }, [debouncedInputValue, dispatch]);
 
   const focusInput = () => {
     if (document.activeElement === inputRef.current) return;
@@ -33,7 +34,7 @@ export function NavBar() {
     setInputValue('');
   };
 
-  useKey('enter', focusInput);
+  useKeyDown('enter', focusInput);
 
   return (
     <nav className={s.nav}>
@@ -44,7 +45,7 @@ export function NavBar() {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <Counter total={total} />
+      <TotalResults total={total} />
     </nav>
   );
 }

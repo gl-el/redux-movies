@@ -1,15 +1,7 @@
+import cx from 'clsx';
 import { useState } from 'react';
 import { Star } from './Star';
-
-const containerStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '16px',
-};
-
-const starContainerStyle = {
-  display: 'flex',
-};
+import s from './Rating.module.scss';
 
 export function Rating({
   max = 5,
@@ -42,8 +34,8 @@ export function Rating({
   };
 
   return (
-    <div style={containerStyle} className={className}>
-      <div style={starContainerStyle}>
+    <div className={cx(s.container, className)}>
+      <div className={s.starsContainer}>
         {Array.from({ length: max }, (_, index) => (
           <Star
             key={index}

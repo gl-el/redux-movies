@@ -5,7 +5,7 @@ import { setStatus } from '@/store/movieDetails.slice';
 import { useState } from 'react';
 import { MovieDetails } from '@/types';
 import { saveMovie } from '@/store/moviesSaved.slice';
-import { useKey } from '@/hooks/useKey';
+import { useKeyDown } from '@/hooks';
 
 export function MovieDetailed({ movie }: { movie: MovieDetails }) {
   const { Title, Poster, Year, Runtime, Genre, Plot, Actors, Director, imdbRating, imdbID } = movie;
@@ -22,10 +22,10 @@ export function MovieDetailed({ movie }: { movie: MovieDetails }) {
     close();
   };
 
-  useKey('escape', close);
+  useKeyDown('escape', close);
   return (
     <section className={s.section}>
-      <button className={s.back} onClick={() => dispatch(setStatus('idle'))}>
+      <button className={s.back} onClick={close}>
         ❮
       </button>
       <div className={s.info}>
